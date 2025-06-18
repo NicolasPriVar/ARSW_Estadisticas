@@ -5,36 +5,55 @@
 - Durante esta práctica se va a crear un proyecto en Maven, el cual nos permita obtener la desviación estándar y la media de unos valores, en este caso los valores se encontrarán en dos archivos (column1 y column2)   
 ---  
 ## 🔎 Explicación del código 🔎  
-- Este programa en Java calcula la media y la desviación estándar de un conjunto de números almacenados en un archivo llamado data/column2.txt. Primero, lee cada línea del archivo, la convierte a un número decimal 
+- La clase App (principal) calcula la media y la desviación estándar de un conjunto de números almacenados en un archivo llamado data/column(1 o 2).txt. Primero, lee cada línea del archivo, la convierte a un número decimal 
 (Double) y la guarda en una lista enlazada genérica (ListaEnlazada<Double>). Luego, usa la clase Calculadora junto con expresiones lambda 
 (x -> x) para indicar cómo procesar los elementos de la lista. La función mean calcula el promedio de los valores y stdDev calcula la desviación estándar. Finalmente, 
-imprime ambos resultados en consola. Este enfoque demuestra el uso de genéricos, lambdas y colecciones personalizadas en Java para procesar datos de forma flexible. 
+imprime ambos resultados en consola. Este enfoque demuestra el uso de genéricos y lambdas en Java para procesar datos.
+- La clase ListaEnlazada<T> implementa una lista enlazada genérica en Java, lo que permite almacenar elementos de cualquier tipo (T). Internamente utiliza nodos (Node<T>) que contienen un dato y una referencia al siguiente nodo. El método add agrega un nuevo elemento al final de la lista recorriéndola desde el inicio. También mantiene un contador de elementos (size). La clase implementa la interfaz Iterable<T>, lo que permite recorrer la lista con un bucle for-each. Para ello, define un iterador interno que comienza en el primer nodo (head) y avanza uno por uno hasta el final.
+- La clase Calculadora define dos métodos genéricos para calcular la media (mean) y la desviación estándar (stdDev) de los elementos de una lista enlazada genérica (ListaEnlazada<T>). Ambos métodos usan la interfaz funcional ToDoubleFunction<T>, lo que permite convertir cada elemento de tipo T a un double, facilitando así el trabajo con datos de distintos tipos. El método mean recorre la lista, aplica la función de conversión a cada elemento y suma los valores para calcular el promedio. El método stdDev primero calcula la media y luego recorre la lista nuevamente, acumulando el cuadrado de las diferencias entre cada valor y la media, para finalmente devolver la raíz cuadrada de la media de esas diferencias al cuadrado. Esta implementación muestra cómo usar genéricos y lambdas en Java.
 ---
-## ⚠️ Datos importantes ⚠️  
-- BufferedReader lee el archivo  
-- trim () elimina espacios para detectar líneas vacías.  
+## ⚠️ ¿Lambdas y genéricos? ⚠️  
+Los genéricos permiten definir clases, interfaces y métodos con tipos parametrizados, es decir, que pueden trabajar con diferentes tipos de datos sin perder seguridad de tipo.  
+#### ¿Por qué usarlos?
+- Evitan casts innecesarios.  
+- Permiten reutilización de código.  
+- Aumentan la seguridad en tiempo de compilación.
+  
+Una lambda es una forma concisa de escribir una implementación de una interfaz funcional (es decir, una interfaz con un único método abstracto).
+
 ---
 ##  ✅ Realicemos pruebas ✅  
-Para este proyecto, realizamos varias pruebas para cada método usado, en resumen encontramos que:  
-- testContarLineasFisicas: Verifica que el método contarLineasFisicas cuente correctamente todas las líneas (vacías, comentarios y código) del archivo Ejemplo.java.
-- testContarLineasLogicas: Verifica que contarLineasLogicas cuente correctamente solo las líneas de código real (ignorando comentarios y líneas vacías) en Ejemplo.java.
-- testArchivoSoloConSaltosDeLinea: Crea un archivo temporal con solo saltos de línea y prueba que contarLineasFisicas los cuente como líneas físicas.
-- testArchivoConComentariosYCodigo: Crea un archivo con comentarios (//, / /) y una línea de código. Verifica que contarLineasFisicas cuente todas las líneas.
-- testArchivoConCodigoYLineasVacias: Crea un archivo con código y líneas vacías, y verifica que contarLineasLogicas ignore las vacías y cuente solo las de código.
-- testArchivoConComentariosMultilinea: Crea un archivo con comentarios multilínea y una línea de código. Verifica que contarLineasLogicas ignore los comentarios y cuente solo la línea de código.
-Al ejecutar las pruebas, vemos que quedaron bien y elñ programa funciona correctamente.  
-![image](https://github.com/user-attachments/assets/58c86fdb-1f1e-4e78-b272-fa09b100b5cb)  
-La estructura del proyecto quedó de la siguiente manera (ignorando la carpeta target)  
-![image](https://github.com/user-attachments/assets/feae03be-055d-40be-9607-f3915d4f5dbb)  
-Para hacer la prueba desde la línea de comandos, ejecutamos el siguente  "java src/main/java/edu/escuelaing/arsw/App.java phy src/main/java/edu/escuelaing/arsw/Ejemplo.java"  
-Dando como resultado:  
-![image](https://github.com/user-attachments/assets/1e566f54-57a4-47ad-b036-25d5f93ffaa0)  
-Y si lo comprobamos...  
-![image](https://github.com/user-attachments/assets/428dba2f-cf05-4e61-baf0-6ff1da256a41)  
-Y ahora probamos el comando  
-"java src/main/java/edu/escuelaing/arsw/App.java loc src/main/java/edu/escuelaing/arsw/Ejemplo.java"  
-Dando como resultado:  
-![image](https://github.com/user-attachments/assets/dba4b359-9e86-4799-a90c-87ecadaccf44)  
-Y si lo comprobamos...  
-![image](https://github.com/user-attachments/assets/a58c6459-01f2-4c87-8af4-8016ee40be9c)  
-Quedó todo bien.
+Una manera de probar el código, es colocando en los archivos .txt los números que nos dan en el PDF, para columna 1 son:  
+160  
+591  
+114  
+229  
+230  
+270  
+128  
+1657  
+624  
+1503  
+Y para columna 2 son:  
+15.0  
+69.9  
+6.5  
+22.4  
+28.4  
+65.9  
+19.4  
+198.7  
+38.8  
+138.2  
+Según el PDF los resultados deben ser:  
+![image](https://github.com/user-attachments/assets/232df72e-0514-4af2-88c0-f70f82a98e1b)  
+Y al ejecutar el programa con column1, obtenemos:  
+![image](https://github.com/user-attachments/assets/9d86394a-3010-44bf-9544-95a659994112)  
+Y para column2, obtenemos:  
+![image](https://github.com/user-attachments/assets/45a43a5d-6392-4f97-87bc-7cfdd45b2189)  
+Podemos observar que los resultados de la media si corresponden pero los de la desviación estándar no, pero al revisar externamente la desviación de cada columna, da como resultado:
+Para column1  
+![image](https://github.com/user-attachments/assets/d0b65820-3131-4a02-b485-91f65b7e7ab5)  
+Y para column2  
+![image](https://github.com/user-attachments/assets/cbf66418-2761-420f-a472-20d115464884)  
+Por ende, podemos concluir que si quedó bien el programa y fue un error de cálculos en el PDF.
